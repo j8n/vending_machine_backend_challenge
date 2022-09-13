@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
+        <title>Built with Laravel</title>
     </head>
     <body style="text-align: center;">
-        <h2>MVP Match Challenge</h2>
+        <h2>Vending Machine Backend Challenge</h2>
+        <h4>Built with Laravel</h4>
     </body>
 </html>
