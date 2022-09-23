@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\ProductResource;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Product;
@@ -327,10 +328,7 @@ class UserController extends Controller
             'success' => true,
             'totalSpent' => $totalAmount,
             'newAmountAvailable' => $user->deposit,
-            'productBought' => [
-                'id' => $product->id,
-                'name' => $product->productName
-            ],
+            'productBought' => new ProductResource($product),
             'change' => $change
         ]);
 

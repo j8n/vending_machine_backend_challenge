@@ -36,12 +36,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // check authorization
+        if ($request->user()->cannot('create', Product::class)) {
+            // return response
+            return response()->json([
+                'success' => false,
+                'error' => 'Forbidden'
+            ]);
+        }
+
         // validate
         $validator = Validator::make($request->all(), [
             'productName' => 'required|string',
             'amountAvailable' => 'required|integer',
-            'cost' => 'required',
-            'sellerId' => 'required|integer'
+            'cost' => 'required'
         ]);
 
         // check if fails
@@ -60,23 +68,12 @@ class ProductController extends Controller
             ]);
         }
 
-        // get the seller user
-        $sellerUser = User::findOrFail($request->input('sellerId'));
-
-        // check if they have the correct role
-        if($sellerUser->role_id !== Role::SELLER){
-            return response()->json([
-                'success' => false,
-                'error' => 'The user must be a seller.',
-            ]);
-        }
-
         // create the new product
         $product = new Product();
         $product->productName = $request->input('productName');
         $product->amountAvailable = $request->input('amountAvailable');
         $product->cost = $request->input('cost');
-        $product->sellerId = $sellerUser->id;
+        $product->sellerId = $request->user()->id;
         $product->save();
 
         // return response
